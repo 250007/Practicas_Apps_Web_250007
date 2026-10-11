@@ -76,7 +76,7 @@ Practicas_Aplicaciones_Web_250007/
 ## 🚀 Instrucciones de Ejecución
 1. Clonar el repositorio localmente:
    ```bash
-   git clone [https://github.com/250007/Practicas_Aplicaciones_Web_250007.git](https://github.com/250007/Practicas_Aplicaciones_Web_250007.git)
+   git clone [https://github.com/250007/Practicas_Apps_Web_250007.git](https://github.com/250007/Practicas_Apps_Web_250007.git)
    ```
 2. Abrir el archivo `index.html` en cualquier navegador moderno o utilizando la extensión *Live Server* en Visual Studio Code.
 
