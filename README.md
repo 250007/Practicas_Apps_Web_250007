@@ -60,4 +60,4 @@
 
 | Configuración en GitHub Pages | Portafolio Web Funcional |
 | :---: | :---: |
-| ![Configuración Pages](practica03/assets/images/cap1.png) | ![Portafolio Funcional](practica03/assets/images/cap2.png) |
+| ![Configuración Pages](practica03/assets/Images/cap1.png) | ![Portafolio Funcional](practica03/assets/Images/cap2.png) |
