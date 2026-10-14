@@ -261,128 +261,119 @@ section:nth-of-type(5) .contenido-seccion {
     box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
 }
 
-/* ================= CARRUSEL RESTRUCTURADO ================= */
+/* ================= CARRUSEL DE FAVORITOS ================= */
 
 .carrusel {
     position: relative;
-    max-width: 420px;
-    margin: 0 auto;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: flex;
+    align-items: center;
     gap: 12px;
+    max-width: 560px;
+    margin: auto;
+}
+
+.carrusel:focus-visible {
+    outline: 3px solid #7dd3fc;
+    outline-offset: 6px;
+    border-radius: 20px;
 }
 
 .carrusel-ventana {
-    overflow: hidden !important;
-    width: 100% !important;
+    flex: 1;
+    overflow: hidden;
     border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
 }
 
 .carrusel-pista {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 300% !important; /* 300% para los 3 slides horizontales */
-    transition: transform 0.4s ease-in-out !important;
+    display: flex;
+    transition: transform .5s ease;
 }
 
 .carrusel-slide {
-    width: 33.3333% !important; /* Cada uno toma 1/3 del ancho total */
-    box-sizing: border-box;
+    flex: 0 0 100%;
+    padding: 30px;
     background: #ea97b3;
-    padding: 25px 15px;
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    color: #111827;
     text-align: center;
 }
 
 .carrusel-slide h3 {
-    font-size: 1.3rem;
     margin-bottom: 15px;
-    color: #111827;
 }
 
 .carrusel-enlace {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    transition: transform 0.3s ease;
-}
-
-.carrusel-enlace:hover {
-    transform: scale(1.03);
+    display: block;
 }
 
 .favorito-img {
-    width: 220px !important;
-    height: 320px !important;
-    object-fit: cover !important;
+    width: 100%;
+    max-width: 250px;
+    height: 350px;
+    object-fit: cover;
     border-radius: 15px;
+    margin-top: 15px;
     background: #ffffff;
-    padding: 5px;
+    padding: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    transition: .3s;
+}
+
+.carrusel-enlace:hover .favorito-img {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .3);
 }
 
 .carrusel-slide p {
-    font-size: 1.1rem;
-    font-weight: 600;
     margin-top: 15px;
-    color: #111827;
+    font-weight: bold;
 }
 
 .carrusel-pista-texto {
     display: block;
-    font-size: 0.85rem;
+    margin-top: 6px;
+    font-size: .9rem;
     color: #4b5563;
-    margin-top: 5px;
-    font-style: italic;
 }
 
 .carrusel-btn {
-    background: #1e293b;
-    color: #ffffff;
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
     border: none;
-    font-size: 1.5rem;
-    width: 45px;
-    height: 45px;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     border-radius: 50%;
-    z-index: 10;
-    transition: background 0.3s ease, transform 0.2s ease;
-    flex-shrink: 0;
+    background: #111827;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .3s;
 }
 
 .carrusel-btn:hover {
-    background: #af6aa2;
+    background: tomato;
     transform: scale(1.1);
 }
 
 .carrusel-puntos {
-    display: flex !important;
+    display: flex;
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
 }
 
-.dot {
+.carrusel-puntos button {
     width: 12px;
     height: 12px;
-    background-color: rgba(17, 24, 39, 0.3);
+    padding: 0;
+    border: none;
     border-radius: 50%;
+    background: #94a3b8;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: .3s;
 }
 
-.dot.active {
-    background-color: #111827;
+.carrusel-puntos button.activo {
+    background: #111827;
     transform: scale(1.3);
 }
 
@@ -517,8 +508,12 @@ footer a {
         width: 100%;
     }
 
-    .favorito-img {
-        width: 180px !important;
-        height: 270px !important;
-    }
+    .carrusel { gap: 6px; }
+    .carrusel-btn { width: 36px; height: 36px; }
+    .carrusel-slide { padding: 20px; }
+    .favorito-img { height: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carrusel-pista { transition: none; }
 }
