@@ -1,61 +1,60 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const track = document.getElementById("carouselTrack");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const dots = document.querySelectorAll(".dot");
-    const totalSlides = 3;
+    (function () {
+        const carrusel = document.querySelector('.carrusel');
+        if (!carrusel) return;
 
-    let currentIndex = 0;
+        const pista = carrusel.querySelector('.carrusel-pista');
+        const slides = carrusel.querySelectorAll('.carrusel-slide');
+        const btnPrev = carrusel.querySelector('.carrusel-prev');
+        const btnNext = carrusel.querySelector('.carrusel-next');
+        const contPuntos = document.querySelector('.carrusel-puntos');
+        let actual = 0;
 
-    function updateCarousel() {
-        if (!track) return;
+        // Generar puntos dinámicamente
+        if (contPuntos) {
+            contPuntos.innerHTML = ""; // Limpiar si había algo antes
+            slides.forEach(function (_, i) {
+                const punto = document.createElement('button');
+                punto.type = 'button';
+                punto.setAttribute('aria-label', 'Ir al favorito ' + (i + 1));
+                punto.addEventListener('click', function () { ir(i); });
+                contPuntos.appendChild(punto);
+            });
+        }
 
-        // Cada slide equivale al 33.3333% del ancho total de la pista (100% / 3)
-        const shiftPercentage = currentIndex * (100 / totalSlides);
-        track.style.transform = `translateX(-${shiftPercentage}%)`;
+        const puntos = contPuntos ? contPuntos.querySelectorAll('button') : [];
 
-        // Actualizar el estado visual de los puntos indicadores
-        dots.forEach((dot, index) => {
-            if (index === currentIndex) {
-                dot.classList.add("active");
-            } else {
-                dot.classList.remove("active");
-            }
+        function ir(i) {
+            actual = (i + slides.length) % slides.length;
+            pista.style.transform = 'translateX(-' + (actual * 100) + '%)';
+            puntos.forEach(function (p, n) {
+                p.classList.toggle('activo', n === actual);
+            });
+        }
+
+        if (btnPrev) btnPrev.addEventListener('click', function () { ir(actual - 1); });
+        if (btnNext) btnNext.addEventListener('click', function () { ir(actual + 1); });
+
+        // Navegación con flechas del teclado
+        carrusel.setAttribute('tabindex', '0');
+        carrusel.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') ir(actual - 1);
+            if (e.key === 'ArrowRight') ir(actual + 1);
         });
-    }
 
-    if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
-            if (currentIndex < totalSlides - 1) {
-                currentIndex++;
-            } else {
-                currentIndex = 0; // Vuelve al inicio
-            }
-            updateCarousel();
+        // Deslizar con el dedo en pantallas táctiles (celulares)
+        let inicioX = null;
+        carrusel.addEventListener('touchstart', function (e) {
+            inicioX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carrusel.addEventListener('touchend', function (e) {
+            if (inicioX === null) return;
+            const dif = e.changedTouches[0].clientX - inicioX;
+            if (Math.abs(dif) > 50) ir(dif < 0 ? actual + 1 : actual - 1);
+            inicioX = null;
         });
-    }
 
-    if (prevBtn) {
-        prevBtn.addEventListener("click", () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-            } else {
-                currentIndex = totalSlides - 1; // Salta al último
-            }
-            updateCarousel();
-        });
-    }
-
-    dots.forEach((dot) => {
-        dot.addEventListener("click", (e) => {
-            const index = parseInt(e.target.getAttribute("data-index"));
-            if (!isNaN(index)) {
-                currentIndex = index;
-                updateCarousel();
-            }
-        });
-    });
-
-    // Iniciar posicionamiento correcto
-    updateCarousel();
+        ir(0);
+    })();
 });
