@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCarousel() {
         if (!track) return;
         const shiftAmount = getCardShift();
-        // Se agregó el operador de multiplicación (*)
         track.style.transform = `translateX(-${currentIndex * shiftAmount}px)`;
 
         dots.forEach((dot, index) => {
@@ -80,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         Tu navegador no soporta la reproducción de video.
                     </video>`;
             } else if (type === "audio") {
-                // *** CORRECCIÓN: Contenedor claro para que los controles sean visibles ***
                 modalBody.innerHTML = `
                     <div style="text-align:center; padding: 25px; width: 100%; max-width: 500px; background-color: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center;">
                         <p style="color: #1f2937; margin-bottom: 15px; font-weight: 500; font-family: sans-serif;">Reproductor de Canción</p>
