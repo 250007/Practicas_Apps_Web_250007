@@ -296,7 +296,7 @@ section:nth-of-type(5) .contenido-seccion {
     font-size: 1.1rem;
 }
 
-/* ================= CORRECCIÓN DEL CARRUSEL ================= */
+/* ================= ESTILOS DEL CARRUSEL ================= */
 
 .carrusel {
     position: relative;
@@ -326,6 +326,7 @@ section:nth-of-type(5) .contenido-seccion {
 .carrusel-slide {
     flex: 0 0 100% !important;
     width: 100% !important;
+    min-width: 100% !important;
     box-sizing: border-box;
     background: #ea97b3;
     padding: 25px 20px;
@@ -356,10 +357,10 @@ section:nth-of-type(5) .contenido-seccion {
     transform: scale(1.03);
 }
 
-/* Portada Vertical en Formato Póster */
+/* Portada Vertical */
 .favorito-img {
-    width: 260px !important;
-    height: 380px !important;
+    width: 240px !important;
+    height: 350px !important;
     object-fit: cover !important;
     border-radius: 15px;
     background: #ffffff;
@@ -607,7 +608,7 @@ footer a {
     }
 
     .favorito-img {
-        width: 220px !important;
-        height: 320px !important;
+        width: 200px !important;
+        height: 300px !important;
     }
 }
