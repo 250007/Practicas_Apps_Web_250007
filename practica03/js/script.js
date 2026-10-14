@@ -3,20 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const dots = document.querySelectorAll(".dot");
-    const slides = document.querySelectorAll(".carrusel-slide");
+    const totalSlides = 3;
 
     let currentIndex = 0;
 
     function updateCarousel() {
-        if (!track || slides.length === 0) return;
+        if (!track) return;
 
-        // Obtenemos el ancho exacto del slide visible
-        const slideWidth = slides[0].offsetWidth;
-        
-        // Desplazamos la pista en píxeles exactos
-        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        // Cada slide equivale al 33.3333% del ancho total de la pista (100% / 3)
+        const shiftPercentage = currentIndex * (100 / totalSlides);
+        track.style.transform = `translateX(-${shiftPercentage}%)`;
 
-        // Actualizamos las bolitas (puntos)
+        // Actualizar el estado visual de los puntos indicadores
         dots.forEach((dot, index) => {
             if (index === currentIndex) {
                 dot.classList.add("active");
@@ -28,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nextBtn) {
         nextBtn.addEventListener("click", () => {
-            if (currentIndex < slides.length - 1) {
+            if (currentIndex < totalSlides - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Regresa al primero
+                currentIndex = 0; // Vuelve al inicio
             }
             updateCarousel();
         });
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Salta al último
+                currentIndex = totalSlides - 1; // Salta al último
             }
             updateCarousel();
         });
@@ -58,9 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Recalcular posición si se cambia el tamaño de la ventana
-    window.addEventListener("resize", updateCarousel);
-    
-    // Ejecutar una vez al cargar para asegurar posicionamiento
+    // Iniciar posicionamiento correcto
     updateCarousel();
 });
