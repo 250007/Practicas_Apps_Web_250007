@@ -5,14 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- MODAL DE PANTALLA COMPLETA -->
-<div id="mediaModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <div id="modalBody"></div>
-    </div>
-</div>
-
     <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js"
         crossorigin="anonymous"></script>
 
@@ -22,24 +14,25 @@
         Jimena Garcia Ramirez @T.S.U en Desarrollo de Software Multiplataforma
     </title>
 
-
-
     <!-- Importar tipografía Poppins desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-
     <link rel="icon"
         href="assets/images/gatito.svg"
-<<<<<<< HEAD
-        type="image/svg">     
-=======
         type="image/svg">
->>>>>>> practica03
 </head>
 
 <body>
+
+    <!-- MODAL DE PANTALLA COMPLETA -->
+    <div id="mediaModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
 
     <!-- ====================== -->
     <!-- NAVEGACION -->
@@ -241,59 +234,60 @@
 
 
     <!-- SECCIÓN FAVORITOS -->
-<section id="favoritos">
-    <h2>Mis Favoritos</h2>
+    <section id="favoritos">
+        <div class="contenido-seccion">
+            <h2>Mis Favoritos</h2>
 
-    <div class="carousel-wrapper">
-        <button class="carousel-arrow prev-arrow" id="prevBtn" aria-label="Anterior">&#10094;</button>
+            <div class="carousel-container">
+                <button class="carousel-btn prev-arrow" id="prevBtn" aria-label="Anterior">&#10094;</button>
 
-        <div class="carousel-container">
-            <div class="carousel-track" id="carouselTrack">
-                
-                <!-- Tarjeta 1: Película -->
-                <article class="card carousel-card">
-                    <h3>Película favorita</h3>
-                    <img src="assets/images/pelicula.jpg" alt="Rapunzel" class="favorito-img">
-                    <p>Rapunzel</p>
-                    <button class="btn-modal" data-type="video" data-src="assets/videos/pelicula.mp4">
-    🎬 Ver Película
-</button>
-                </article>
+                <div class="carousel-track-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        
+                        <!-- Tarjeta 1: Película -->
+                        <article class="card carousel-card">
+                            <h3>Película favorita</h3>
+                            <img src="assets/images/pelicula.jpg" alt="Rapunzel" class="favorito-img">
+                            <p>Rapunzel</p>
+                            <button class="btn-modal" data-type="video" data-src="assets/videos/pelicula.mp4">
+                                🎬 Ver Película
+                            </button>
+                        </article>
 
-                <!-- Tarjeta 2: Canción -->
-                <article class="card carousel-card">
-                    <h3>Canción Favorita</h3>
-                    <img src="assets/images/cancion.jpg" alt="Fast Times" class="favorito-img">
-                    <p>Fast Times - Sabrina Carpenter</p>
-                    <button class="btn-modal" data-type="audio" data-src="assets/audios/cancion.mp3">
-    🎵 Escuchar Canción
-</button>
-                </article>
+                        <!-- Tarjeta 2: Canción -->
+                        <article class="card carousel-card">
+                            <h3>Canción Favorita</h3>
+                            <img src="assets/images/cancion.jpg" alt="Fast Times" class="favorito-img">
+                            <p>Fast Times - Sabrina Carpenter</p>
+                            <button class="btn-modal" data-type="audio" data-src="assets/audios/cancion.mp3">
+                                🎵 Escuchar Canción
+                            </button>
+                        </article>
 
-                <!-- Tarjeta 3: Libro -->
-                <article class="card carousel-card">
-                    <h3>Libro favorito</h3>
-                    <img src="assets/images/libro.jpg" alt="Alicia en el país de las maravillas" class="favorito-img">
-                    <p>Alicia en el país de las maravillas</p>
-                    <button class="btn-modal" data-type="pdf" data-src="assets/docs/libro.pdf">
-    📖 Leer Libro
-</button>
-                </article>
+                        <!-- Tarjeta 3: Libro -->
+                        <article class="card carousel-card">
+                            <h3>Libro favorito</h3>
+                            <img src="assets/images/libro.jpg" alt="Alicia en el país de las maravillas" class="favorito-img">
+                            <p>Alicia en el país de las maravillas</p>
+                            <button class="btn-modal" data-type="pdf" data-src="assets/docs/libro.pdf">
+                                📖 Leer Libro
+                            </button>
+                        </article>
 
+                    </div>
+                </div>
+
+                <button class="carousel-btn next-arrow" id="nextBtn" aria-label="Siguiente">&#10095;</button>
+            </div>
+
+            <!-- Indicadores de navegación -->
+            <div class="carousel-dots" id="carouselDots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
             </div>
         </div>
-
-        <button class="carousel-arrow next-arrow" id="nextBtn" aria-label="Siguiente">&#10095;</button>
-    </div>
-
-    <!-- Indicadores de navegación -->
-    <div class="carousel-dots" id="carouselDots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
-    </div>
-</section>
-
+    </section>
 
 
     <!-- ====================== -->
