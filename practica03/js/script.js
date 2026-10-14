@@ -11,12 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCarousel() {
         if (!track || !slides.length) return;
         
-        // Desplaza horizontalmente solo una tarjeta a la vez (100% por slide)
+        // Mueve la pista horizontalmente el 100% del ancho del slide actual
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-        // Actualiza el estado activo de los puntos de navegación
+        // Actualiza el indicador activo (puntos)
         dots.forEach((dot, index) => {
-            dot.classList.toggle("active", index === currentIndex);
+            if (index === currentIndex) {
+                dot.classList.add("active");
+            } else {
+                dot.classList.remove("active");
+            }
         });
     }
 
@@ -25,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Vuelve al primer slide al llegar al final
+                currentIndex = 0; // Regresa al primer slide
             }
             updateCarousel();
         });
@@ -36,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Vuelve al último slide
+                currentIndex = slides.length - 1; // Salta al último slide
             }
             updateCarousel();
         });
@@ -44,8 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     dots.forEach((dot) => {
         dot.addEventListener("click", (e) => {
-            currentIndex = parseInt(e.target.getAttribute("data-index"));
-            updateCarousel();
+            const index = parseInt(e.target.getAttribute("data-index"));
+            if (!isNaN(index)) {
+                currentIndex = index;
+                updateCarousel();
+            }
         });
     });
 
