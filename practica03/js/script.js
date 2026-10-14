@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCarousel() {
         if (!track || !slides.length) return;
         
-        // Mueve la pista el 100% del ancho por cada slide
+        // Desplaza horizontalmente solo una tarjeta a la vez (100% por slide)
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-        // Actualiza los puntos indicadores
+        // Actualiza el estado activo de los puntos de navegación
         dots.forEach((dot, index) => {
             dot.classList.toggle("active", index === currentIndex);
         });
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Regresa al inicio al llegar al final
+                currentIndex = 0; // Vuelve al primer slide al llegar al final
             }
             updateCarousel();
         });
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Va al último si está en el primero
+                currentIndex = slides.length - 1; // Vuelve al último slide
             }
             updateCarousel();
         });
