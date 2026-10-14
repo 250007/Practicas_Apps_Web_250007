@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ================= CARRUSEL MULTIMEDIA =================
     const track = document.getElementById("carouselTrack");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -9,12 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentIndex = 0;
 
     function updateCarousel() {
-        if (!track || !slides.length) return;
-        
-        // Mueve la pista horizontalmente el 100% del ancho del slide actual
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        if (!track || slides.length === 0) return;
 
-        // Actualiza el indicador activo (puntos)
+        // Obtenemos el ancho exacto del slide visible
+        const slideWidth = slides[0].offsetWidth;
+        
+        // Desplazamos la pista en píxeles exactos
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+
+        // Actualizamos las bolitas (puntos)
         dots.forEach((dot, index) => {
             if (index === currentIndex) {
                 dot.classList.add("active");
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Regresa al primer slide
+                currentIndex = 0; // Regresa al primero
             }
             updateCarousel();
         });
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Salta al último slide
+                currentIndex = slides.length - 1; // Salta al último
             }
             updateCarousel();
         });
@@ -56,5 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Recalcular posición si se cambia el tamaño de la ventana
     window.addEventListener("resize", updateCarousel);
+    
+    // Ejecutar una vez al cargar para asegurar posicionamiento
+    updateCarousel();
 });
