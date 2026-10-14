@@ -26,14 +26,6 @@
 
 <body>
 
-    <!-- MODAL DE PANTALLA COMPLETA -->
-    <div id="mediaModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-
     <!-- ====================== -->
     <!-- NAVEGACION -->
     <!-- ====================== -->
@@ -233,8 +225,10 @@
     </section>
 
 
-    <!-- SECCIÓN FAVORITOS -->
-    <!-- SECCIÓN FAVORITOS -->
+    <!-- ====================== -->
+    <!-- FAVORITOS -->
+    <!-- ====================== -->
+
     <section id="favoritos">
 
         <div class="parallax parallax-5 titulo-parallax">
@@ -245,10 +239,10 @@
 
             <div class="carrusel" aria-roledescription="carrusel" aria-label="Mis favoritos">
 
-                <button class="carrusel-btn carrusel-prev" type="button" aria-label="Anterior">&#10094;</button>
+                <button class="carrusel-btn carrusel-prev" id="prevBtn" type="button" aria-label="Anterior">&#10094;</button>
 
                 <div class="carrusel-ventana">
-                    <div class="carrusel-pista">
+                    <div class="carrusel-pista" id="carouselTrack">
 
                         <!-- ===== SLIDE 1: PELÍCULA ===== -->
                         <article class="carrusel-slide">
@@ -295,12 +289,16 @@
                     </div>
                 </div>
 
-                <button class="carrusel-btn carrusel-next" type="button" aria-label="Siguiente">&#10095;</button>
+                <button class="carrusel-btn carrusel-next" id="nextBtn" type="button" aria-label="Siguiente">&#10095;</button>
 
             </div>
 
-            <!-- Los puntos se generan solos si tu amigo usa un script dinámico -->
-            <div class="carrusel-puntos" role="tablist" aria-label="Elegir favorito"></div>
+            <!-- Indicadores de navegación (Puntos) -->
+            <div class="carrusel-puntos" id="carouselDots" role="tablist" aria-label="Elegir favorito">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
 
         </div>
 
