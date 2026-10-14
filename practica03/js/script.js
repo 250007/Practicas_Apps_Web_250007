@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div style="text-align:center; padding: 25px; width: 100%; max-width: 500px; background-color: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center;">
                         <p style="color: #1f2937; margin-bottom: 15px; font-weight: 500; font-family: sans-serif;">Reproductor de Canción</p>
                         <audio controls autoplay style="width:100%;">
-                            <source src="${src}" type="audio/mpeg">
+                            <source src="${src}" type="audio/mp3">
                             Tu navegador no soporta la reproducción de audio.
                         </audio>
                     </div>`;
