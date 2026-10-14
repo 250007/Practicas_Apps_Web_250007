@@ -232,29 +232,6 @@ section:nth-of-type(5) .contenido-seccion {
     line-height: 1.6;
 }
 
-/* ================= TARJETAS PEQUEÑAS (ACERCA DE MÍ) ================= */
-
-.info-grid, 
-.fila-cards,
-.contenedor-tarjetas { 
-    display: flex;
-    justify-content: center; 
-    gap: 25px;               
-    width: 100%;
-    max-width: 900px;       
-    margin-top: 20px;
-}
-
-.info-card,
-.card-mini {
-    flex: 1;                
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
-    text-align: center;
-}
-
 /* ================= DATOS PERSONALES ================= */
 
 .datos {
@@ -319,45 +296,126 @@ section:nth-of-type(5) .contenido-seccion {
     font-size: 1.1rem;
 }
 
-.grid .card {
-    justify-content: space-between;
+/* ================= ESTILOS DEL CARRUSEL NUEVO ================= */
+
+.carrusel {
+    position: relative;
+    max-width: 450px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-/* ================= MULTIMEDIA ================= */
+.carrusel-ventana {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px 0;
+}
+
+.carrusel-pista {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+}
+
+.carrusel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
+    background: #ea97b3;
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.carrusel-slide h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.carrusel-enlace {
+    display: inline-block;
+    width: 100%;
+    max-width: 250px;
+    transition: transform 0.3s ease;
+}
+
+.carrusel-enlace:hover {
+    transform: scale(1.03);
+}
 
 .favorito-img {
     width: 100%;
-    height: 250px;       
+    height: 320px;
     object-fit: cover;
     border-radius: 15px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background: #fdfcfd;
+    background: #ffffff;
     padding: 5px;
     box-shadow: 0 10px 25px rgba(0,0,0,.15);
 }
 
-.favorito-video,
-.favorito-audio {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.carrusel-slide p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #111827;
 }
 
-.favorito-video {
-    height: 160px;
-    object-fit: cover;
-    background: black;
-    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+.carrusel-pista-texto {
+    display: block;
+    font-size: 0.85rem;
+    color: #4b5563;
+    margin-top: 5px;
+    font-style: italic;
 }
 
-.favorito-pdf {
-    width: 100%;
-    height: 180px;          
-    border: 1px solid #ea97b3;  
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+.carrusel-btn {
+    background: #1e293b;
+    color: #ffffff;
+    border: none;
+    font-size: 1.5rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.carrusel-btn:hover {
+    background: #af6aa2;
+    transform: scale(1.1);
+}
+
+.carrusel-puntos {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(17, 24, 39, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.dot.active {
+    background-color: #111827;
+    transform: scale(1.3);
 }
 
 /* ================= REDES SOCIALES ================= */
@@ -460,148 +518,7 @@ footer a {
     }
 }
 
-/* ================= VENTANA MODAL (PANTALLA COMPLETA) ================= */
-
-body.no-scroll {
-    overflow: hidden;
-}
-
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0, 0, 0, 0.85); 
-    backdrop-filter: blur(8px);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    position: relative;
-    background: #1f2937;
-    padding: 20px;
-    border-radius: 15px;
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    color: #fff;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-modal {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background: #374151;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.btn-modal:hover {
-    background: #4b5563;
-}
-
-/* ================= CARRUSEL DE FAVORITOS (ESTILOS GENERALES) ================= */
-
-#favoritos h2 {
-    margin-bottom: 20px;
-}
-
-.carousel-container {
-    position: relative;
-    max-width: 850px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.carousel-track-container {
-    overflow: hidden;
-    width: 100%;
-    border-radius: 20px;
-    padding: 10px 0;
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
-    gap: 20px;
-}
-
-.carousel-card {
-    flex: 0 0 calc(100% - 0px);
-    box-sizing: border-box;
-}
-
-.carousel-btn {
-    background: rgba(17, 24, 39, 0.8);
-    color: #ffffff;
-    border: none;
-    font-size: 1.5rem;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 10;
-    transition: background 0.3s ease, transform 0.2s ease;
-    flex-shrink: 0;
-}
-
-.carousel-btn:hover {
-    background: rgba(17, 24, 39, 1);
-    transform: scale(1.1);
-}
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(17, 24, 39, 0.3);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.dot.active {
-    background-color: #111827;
-    transform: scale(1.2);
-}
-
-/* ================= MEDIA QUERIES (ADAPTACIÓN SEGÚN PANTALLA) ================= */
-
-@media (min-width: 769px) {
-    .carousel-card {
-        flex: 0 0 calc(33.333% - 14px); 
-    }
-}
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 900px) {
     .grid {
@@ -622,8 +539,7 @@ body.no-scroll {
 }
 
 @media (max-width: 768px) {
-    .grid, 
-    .info-grid {
+    .grid {
         flex-direction: column !important;
         align-items: center !important;
     }
@@ -637,10 +553,6 @@ body.no-scroll {
         flex-direction: column;
         gap: 10px;
         text-align: center;
-    }
-
-    .carousel-card {
-        flex: 0 0 100%;
     }
 }
 
@@ -684,6 +596,6 @@ body.no-scroll {
     }
 
     .favorito-img {
-        height: 220px;
+        height: 260px;
     }
 }
