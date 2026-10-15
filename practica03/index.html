@@ -15,13 +15,10 @@
         Jimena Garcia Ramirez @T.S.U en Desarrollo de Software Multiplataforma
     </title>
 
-
-
     <!-- Importar tipografía Poppins desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 
     <link rel="icon"
         href="assets/Images/gatito.svg"
@@ -80,7 +77,7 @@
 
         <div class="glass porfile-card">
 
-            <img src="assets/Images/perfil.png"
+            <img src="assets/images/perfil.png"
                 alt="Foto de perfil"
                 class="porfile-img">
 
@@ -238,60 +235,80 @@
     </section>
 
 
-    <!-- SECCIÓN FAVORITOS -->
-<section id="favoritos">
-    <h2>Mis Favoritos</h2>
+    <!-- ====================== -->
+    <!-- FAVORITOS -->
+    <!-- ====================== -->
 
-    <div class="carousel-wrapper">
-        <button class="carousel-arrow prev-arrow" id="prevBtn" aria-label="Anterior">&#10094;</button>
+    <section id="favoritos">
 
-        <div class="carousel-container">
-            <div class="carousel-track" id="carouselTrack">
-                
-                <!-- Tarjeta 1: Película -->
-                <article class="card carousel-card">
-                    <h3>Película favorita</h3>
-                    <img src="assets/Images/pelicula.jpg" alt="Rapunzel" class="favorito-img">
-                    <p>Rapunzel</p>
-                    <button class="btn-modal" data-type="video" data-src="assets/videos/pelicula.mp4">
-    🎬 Ver Película
-</button>
-                </article>
-
-                <!-- Tarjeta 2: Canción -->
-                <article class="card carousel-card">
-                    <h3>Canción Favorita</h3>
-                    <img src="assets/Images/cancion.jpg" alt="Fast Times" class="favorito-img">
-                    <p>Fast Times - Sabrina Carpenter</p>
-                    <button class="btn-modal" data-type="audio" data-src="assets/audios/cancion.mp3">
-    🎵 Escuchar Canción
-</button>
-                </article>
-
-                <!-- Tarjeta 3: Libro -->
-                <article class="card carousel-card">
-                    <h3>Libro favorito</h3>
-                    <img src="assets/Images/libro.jpg" alt="Alicia en el país de las maravillas" class="favorito-img">
-                    <p>Alicia en el país de las maravillas</p>
-                    <button class="btn-modal" data-type="pdf" data-src="assets/docs/libro.pdf">
-    📖 Leer Libro
-</button>
-                </article>
-
-            </div>
+        <div class="parallax parallax-5 titulo-parallax">
+            <h2>Mis favoritos</h2>
         </div>
 
-        <button class="carousel-arrow next-arrow" id="nextBtn" aria-label="Siguiente">&#10095;</button>
-    </div>
+        <div class="contenido-seccion">
 
-    <!-- Indicadores de navegación -->
-    <div class="carousel-dots" id="carouselDots">
-        <span class="dot active" data-index="0"></span>
-        <span class="dot" data-index="1"></span>
-        <span class="dot" data-index="2"></span>
-    </div>
-</section>
+            <div class="carrusel" aria-roledescription="carrusel" aria-label="Mis favoritos">
 
+                <button class="carrusel-btn carrusel-prev" type="button" aria-label="Anterior">&#10094;</button>
+
+                <div class="carrusel-ventana">
+                    <div class="carrusel-pista">
+
+                        <!-- ===== SLIDE 1: PELÍCULA ===== -->
+                        <article class="carrusel-slide">
+                            <h3>Película favorita</h3>
+
+                            <a href="assets/videos/pelicula.mp4" target="_blank" rel="noopener" class="carrusel-enlace">
+                                <img src="assets/images/pelicula.jpg"
+                                    alt="Portada de la película Rapunzel"
+                                    class="favorito-img">
+                            </a>
+
+                            <p>Rapunzel</p>
+                            <span class="carrusel-pista-texto">Toca la portada para ver el tráiler</span>
+                        </article>
+
+                        <!-- ===== SLIDE 2: CANCIÓN ===== -->
+                        <article class="carrusel-slide">
+                            <h3>Canción favorita</h3>
+
+                            <a href="assets/audios/cancion.mp3" target="_blank" rel="noopener" class="carrusel-enlace">
+                                <img src="assets/images/cancion.jpg"
+                                    alt="Portada de la canción Fast Times"
+                                    class="favorito-img">
+                            </a>
+
+                            <p>Fast Times - Sabrina Carpenter</p>
+                            <span class="carrusel-pista-texto">Toca la portada para escuchar la canción</span>
+                        </article>
+
+                        <!-- ===== SLIDE 3: LIBRO ===== -->
+                        <article class="carrusel-slide">
+                            <h3>Libro favorito</h3>
+
+                            <a href="assets/docs/libro-fav.pdf" target="_blank" rel="noopener" class="carrusel-enlace">
+                                <img src="assets/images/libro.jpg"
+                                    alt="Portada de Alicia en el país de las maravillas"
+                                    class="favorito-img">
+                            </a>
+
+                            <p>Alicia en el país de las maravillas</p>
+                            <span class="carrusel-pista-texto">Toca la portada para leer el libro</span>
+                        </article>
+
+                    </div>
+                </div>
+
+                <button class="carrusel-btn carrusel-next" type="button" aria-label="Siguiente">&#10095;</button>
+
+            </div>
+
+            <!-- Los puntos de navegación se generan automáticamente desde JS -->
+            <div class="carrusel-puntos" role="tablist" aria-label="Elegir favorito"></div>
+
+        </div>
+
+    </section>
 
 
     <!-- ====================== -->
@@ -472,8 +489,71 @@
         </a>
 
     </footer>
+ <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            (function () {
+                const carrusel = document.querySelector('.carrusel');
+                if (!carrusel) return;
 
-    <script src="script.js"></script>
+                const pista = carrusel.querySelector('.carrusel-pista');
+                const slides = carrusel.querySelectorAll('.carrusel-slide');
+                const btnPrev = carrusel.querySelector('.carrusel-prev');
+                const btnNext = carrusel.querySelector('.carrusel-next');
+                const contPuntos = document.querySelector('.carrusel-puntos');
+                let actual = 0;
+
+                // Generar puntos dinámicamente
+                if (contPuntos) {
+                    contPuntos.innerHTML = "";
+                    slides.forEach(function (_, i) {
+                        const punto = document.createElement('button');
+                        punto.type = 'button';
+                        punto.setAttribute('aria-label', 'Ir al favorito ' + (i + 1));
+                        punto.addEventListener('click', function () { ir(i); });
+                        contPuntos.appendChild(punto);
+                    });
+                }
+
+                const puntos = contPuntos ? contPuntos.querySelectorAll('button') : [];
+
+                function ir(i) {
+                    actual = (i + slides.length) % slides.length;
+                    pista.style.transform = 'translateX(-' + (actual * 100) + '%)';
+                    puntos.forEach(function (p, n) {
+                        p.classList.toggle('activo', n === actual);
+                    });
+                }
+
+                if (btnPrev) btnPrev.addEventListener('click', function () { ir(actual - 1); });
+                if (btnNext) btnNext.addEventListener('click', function () { ir(actual + 1); });
+
+                // Navegación con flechas del teclado
+                carrusel.setAttribute('tabindex', '0');
+                carrusel.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowLeft') ir(actual - 1);
+                    if (e.key === 'ArrowRight') ir(actual + 1);
+                });
+
+                // Deslizar con el dedo en celulares
+                let inicioX = null;
+                carrusel.addEventListener('touchstart', function (e) {
+                    inicioX = e.touches[0].clientX;
+                }, { passive: true });
+
+                carrusel.addEventListener('touchend', function (e) {
+                    if (inicioX === null) return;
+                    const dif = e.changedTouches[0].clientX - inicioX;
+                    if (Math.abs(dif) > 50) ir(dif < 0 ? actual + 1 : actual - 1);
+                    inicioX = null;
+                });
+
+                ir(0);
+            })();
+        });
+    </script>
+
+</body>
+</html>
 
 </body>
 </html>
