@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MecaGest: Formulario de Registro de nuevos Usuarios</title>
+</head>
+<body>
+    <h1> MecaGest</h1>
+    <h2> Registro de Nuevos Usuarios</h2>
+    <p> Complete los campos  para solictar una cuenta en el sistema</p>
+    </header>
+    <main>
+        <form action="" method="">
+        <fieldset>
+            <legend>Datos Personales</legend>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Jimena">
+            <br>
+
+            <label for="apPaterno">Apellido Paterno:</label>
+            <input type="text" id="apPaterno" placeholder="Garcia">
+            <br>
+
+            <label for="apMaterno">Apellido Materno:</label>
+            <input type="text" id="apMaterno" placeholder="Ramirez">
+            <br>
+
+             <label for="genero">Género:</label>
+            <select id="genero">
+                <option value="F">Femenino</option>
+                <option value="M">Masculino</option>
+                <option value="X">Prefiero no decirlo</option>
+            </select>
+            <br>
+
+             <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento">
+            <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos de Contacto</legend>
+            <label for="correoElectronico">Correo Electronico:</label>
+            <input type="email" id="correoElectronico" placeholder="jimenagarcia@gmail.com">
+            <br>
+
+            <label for="numeroTelefonico">Numero Telefonico:</label>
+            <input type="tel" id="numeroTelefonico" placeholder="746-116-90-67">
+            <br>
+            <label for="horarioContacto">Horario Contacto:</label>
+            <input type="time" id="horarioContactoInicio" placeholder="09:00">
+            <input type="time" id="horarioContactoFin" placeholder="18:00">
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos de Acceso</legend>
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" placeholder="jimenagarcia"required>
+            <br>
+
+            <label for="contraseña">Constraseña:</label>
+            <input type="password" id="contraseña" placeholder="*****"required>
+            <br>
+
+            <label for="confirmarContraseña">Confirmar Contraseña:</label>
+            <input type="password" id="confirmarContrseña" placeholder="*****"required>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos de Ubicacion</legend>
+            <label for="direccion">Direccion:</label>
+            <input type="text" id="direccion" placeholder="Calle, Número, Colonia, Ciudad, Estado, Código Postal">
+            <label for="estado">Pais:</label>
+            <input type="text" id="Pais" placeholder="Mexico">
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" placeholder="Ciudad de Mexico">
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" id="ciudad" placeholder="Ciudad de Mexico">
+            <label for="codigoPostal">Codigo Postal:</label>
+            <input type="text" id="codigoPostal" placeholder="01234">
+        </fieldset>
+        <input type="submit" value="Enviar Solicitud"
+        </form>
+    </main>
+</body>
+</html>
