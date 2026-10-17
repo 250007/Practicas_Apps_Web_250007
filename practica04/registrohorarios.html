@@ -1,87 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MecaGest: Formulario de Registro de nuevos Usuarios</title>
+    <title>MecaGest: Formulario de Registro de Nuevos Usuarios</title>
 </head>
 <body>
-    <h1> MecaGest</h1>
-    <h2> Registro de Nuevos Usuarios</h2>
-    <p> Complete los campos  para solictar una cuenta en el sistema</p>
+    <header>
+        <h1>MecaGest</h1>
+        <h2>Registro de Nuevos Usuarios</h2>
+        <p>Complete los campos para solicitar una cuenta en el sistema.</p>
     </header>
+
     <main>
-        <form action="" method="">
-        <fieldset>
-            <legend>Datos Personales</legend>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" placeholder="Jimena">
-            <br>
-
-            <label for="apPaterno">Apellido Paterno:</label>
-            <input type="text" id="apPaterno" placeholder="Garcia">
-            <br>
-
+        <form action="" method="post">
+            <fieldset>
+                <legend>Datos Personales</legend>
+                <label for="tituloCortesia">Título de Cortesía:</label>
+                <select id="tituloCortesia">
+                    <option>Sr.</option>
+                    <option>Sra.</option>
+                    <option>Stra.</option>
+                    <option>Ing.</option>
+                    <option>Lic.</option>
+                    <option>Mtr.</option>
+                    <option>Ninguno de los anteriores</option>
+                </select>
+                <br>
+                <br>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" placeholder="Jimena" required>
+                <br>
+                <br>
+                <label for="apPaterno">Apellido Paterno:</label>
+                <input type="text" id="apPaterno" placeholder="Garcia">
+                <br>
+                <br>
             <label for="apMaterno">Apellido Materno:</label>
             <input type="text" id="apMaterno" placeholder="Ramirez">
             <br>
-
-             <label for="genero">Género:</label>
+            <br>
+            <label for="genero">Género:</label>
             <select id="genero">
                 <option value="F">Femenino</option>
                 <option value="M">Masculino</option>
                 <option value="X">Prefiero no decirlo</option>
             </select>
             <br>
-
-             <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <br>
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fechaNacimiento">
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos de Contacto</legend>
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" placeholder="jimena692@gmail.com">
+                <br>
+                <br>
+                <label for="numeroTelefonico">Número Telefónico:</label>
+                <input type="tel" id="numeroTelefonico" placeholder="746 116 9067">
+                <br>
+                <br>
+                <label for="horarioContacto">Favor de contactar en el horario:</label>
+                <input type="time" id="horarioContactoInicio" placeholder="09:00">
+                <input type="time" id="horarioContactoFin" placeholder="18:00">
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos de Acceso</legend>
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" placeholder="jimena692" required>
+                <br>
+                <br>
+                <label for="contraseña">Contraseña:</label>
+                <input type="password" id="contraseña" placeholder="******" required>
+                <br>
+                <br>
+                <label for="confirmarContraseña">Confirmar Contraseña:</label>
+                <input type="password" id="confirmarContraseña" placeholder="******" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos de Ubicación</legend>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" placeholder="Calle, Número, Colonia, Ciudad, Estado, Código Postal">
+                <br>
+                <br>
+                <label for="pais">País:</label>
+                <input type="text" id="pais" placeholder="México">
+                <br>
+                <br>
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" placeholder="Ciudad de México">
+                <br>
+                <br>
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" placeholder="Ciudad de México">
+                <br>
+                <br>
+                <label for="codigoPostal">Código Postal:</label>
+                <input type="text" id="codigoPostal" placeholder="01234">
+            </fieldset>
             <br>
-        </fieldset>
-
-        <fieldset>
-            <legend>Datos de Contacto</legend>
-            <label for="correoElectronico">Correo Electronico:</label>
-            <input type="email" id="correoElectronico" placeholder="jimenagarcia@gmail.com">
+            <input type="checkbox" value="validado"> Acepto términos y condiciones del uso de la plataforma MecaGest.
             <br>
-
-            <label for="numeroTelefonico">Numero Telefonico:</label>
-            <input type="tel" id="numeroTelefonico" placeholder="746-116-90-67">
             <br>
-            <label for="horarioContacto">Horario Contacto:</label>
-            <input type="time" id="horarioContactoInicio" placeholder="09:00">
-            <input type="time" id="horarioContactoFin" placeholder="18:00">
-        </fieldset>
+            <input type="submit" value="Enviar Solicitud">
+            <input type="reset" value="Limpiar Formularios">
+        
 
-        <fieldset>
-            <legend>Datos de Acceso</legend>
-            <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" placeholder="jimenagarcia"required>
-            <br>
+        </form>
 
-            <label for="contraseña">Constraseña:</label>
-            <input type="password" id="contraseña" placeholder="*****"required>
-            <br>
 
-            <label for="confirmarContraseña">Confirmar Contraseña:</label>
-            <input type="password" id="confirmarContrseña" placeholder="*****"required>
-        </fieldset>
+        <br>
+        <br>
+        <form> <!--Elementos que usaremos mas adelante-->
+            <fieldset>
+                <legend>Visualización de Citas por Mes:</legend>
+                <label for="mesCitas">Por favor elige un mes:</label>
+                <input type="month" id="mesCitas">
+                <button id="verCitas">Ver Citas</button>
+                <br>
+                <br>
+                <h4>Las citas programadas para el mes elegido son:</h4>
+                <br>
+                <br>
+                <table style="border: 1px solid black">
+                    <tr>
+                        <th style="border: 1px solid black">No.</th>
+                        <th style="border: 1px solid black">Nombre</th>
+                        <th style="border: 1px solid black">Descripción</th>
+                        <th style="border: 1px solid black">Fecha Programada</th>
+                        <th style="border: 1px solid black">Estatus Actual</th>
+                    </tr>
 
-        <fieldset>
-            <legend>Datos de Ubicacion</legend>
-            <label for="direccion">Direccion:</label>
-            <input type="text" id="direccion" placeholder="Calle, Número, Colonia, Ciudad, Estado, Código Postal">
-            <label for="estado">Pais:</label>
-            <input type="text" id="Pais" placeholder="Mexico">
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" placeholder="Ciudad de Mexico">
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" placeholder="Ciudad de Mexico">
-            <label for="codigoPostal">Codigo Postal:</label>
-            <input type="text" id="codigoPostal" placeholder="01234">
-        </fieldset>
-        <input type="submit" value="Enviar Solicitud"
+                    <tr>
+                        <td style="border: 1px solid black">1.</td>
+                        <td style="border: 1px solid black">Cita de entrega de unidad reparada con el cliente: Mauricio Mejía, Unidad: Volkswagen, Jetta 2020</td>
+                        <td style="border: 1px solid black">Se realizó un cambio de bujías, la unidad esta lista para entrega.</td>
+                        <td style="border: 1px solid black">10 de Octubre de 2026</td>
+                        <td style="border: 1px solid black">Atendida</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid black">2.</td>
+                        <td style="border: 1px solid black">Cita de valoración con el cliente: Jimena Garcia, Unidad: Renault, Duster 2014</td>
+                        <td style="border: 1px solid black">El cliente solicita una revisión del cuerpo de acelaración de la unidad para posible mantenimiento correctivo.</td>
+                        <td style="border: 1px solid black">26 de Octubre de 2026</td>
+                        <td style="border: 1px solid black">Programada</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid black">3.</td>
+                        <td style="border: 1px solid black">Cita de revisión con el cliente: Mauricio Mejía, Unidad: Volkswagen, Jetta 2020</td>
+                        <td style="border: 1px solid black">A la unidad se le hicieron cambios de bujías, pero el cliente reporta un sonido extraño.</td>
+                        <td style="border: 1px solid black">17 de Octubre de 2026</td>
+                        <td style="border: 1px solid black">Programada</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid black">4.</td>
+                        <td style="border: 1px solid black">Cita de valoración con la cliente: Alejandra Romero, Unidad: Toyota, Hilux 2012</td>
+                        <td style="border: 1px solid black">El cliente solicita una revisión del cuerpo de acelaración de la unidad para posible mantenimiento correctivo.</td>
+                        <td style="border: 1px solid black">16 de Octubre de 2026</td>
+                        <td style="border: 1px solid black">Cancelada</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid black">5.</td>
+                        <td style="border: 1px solid black">Cita de valoración con la cliente: Alejandra Romero, Unidad: Toyota, Hilux 2012</td>
+                        <td style="border: 1px solid black">El cliente solicita una revisión del cuerpo de acelaración de la unidad para posible mantenimiento correctivo.</td>
+                        <td style="border: 1px solid black">20 de Octubre de 2026</td>
+                        <td style="border: 1px solid black">Reprogramada</td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>Configuraciones de la interfaz:</legend>
+                <label for="fontColor">Color de fuente:</label>
+                <input type="color" id="fontColor">
+                <br>
+                <br>
+                <label for="backgroundColor">Color de fondo:</label>
+                <input type="color" id="backgroundColor" value="#CCC">
+            </fieldset>
+
+
         </form>
     </main>
+    
 </body>
 </html>
