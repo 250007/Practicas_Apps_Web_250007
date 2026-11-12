@@ -1,10 +1,12 @@
 /* ==========================================================================
    MecaGest · app.js
    1. Utilidades de validación
-   2. Asistente de registro (4 pasos)
+   2. Asistente de registro (5 pasos)
    3. Cálculo de edad
    4. Vista previa del QR de WhatsApp
-   5. Módulos de práctica (citas, interfaz, perfil, fiscal, cita, herramientas)
+   4B. Facturación (paso 5, opcional)
+   5. Solicitar cita (sección 02 de la página)
+   6. Módulos de práctica (citas, interfaz, perfil, fiscal, herramientas)
    ========================================================================== */
 (() => {
     'use strict';
@@ -27,6 +29,7 @@
             return 'Este campo es obligatorio.';
         }
         if (v.typeMismatch || v.patternMismatch) return el.dataset.msg || 'El formato no es válido.';
+        if (v.rangeUnderflow || v.rangeOverflow) return el.dataset.msg || 'El valor está fuera del rango permitido.';
         if (v.tooShort) return `Usa al menos ${el.minLength} caracteres.`;
         return el.validationMessage;
     }
@@ -102,6 +105,16 @@
         // Confirmación de contraseña
         const pass = $('#contrasena'), conf = $('#confirmarContrasena');
         conf.setCustomValidity(conf.value && conf.value !== pass.value ? 'Las contraseñas no coinciden.' : '');
+
+        // Facturación: la longitud del RFC debe coincidir con el régimen
+        const rfcF = $('#rfcFactura'), reg = $('#regimenFiscal');
+        let rfcMsg = '';
+        if (rfcF.value && reg.value) {
+            const n = rfcF.value.length;
+            if (reg.value === '601' && n !== 12) rfcMsg = 'El régimen 601 es de persona moral: el RFC debe tener 12 caracteres.';
+            else if (['605', '612'].includes(reg.value) && n !== 13) rfcMsg = 'Este régimen es de persona física: el RFC debe tener 13 caracteres.';
+        }
+        rfcF.setCustomValidity(rfcMsg);
     }
 
     /** Valida un paso completo; devuelve el primer control inválido (o null). */
@@ -184,7 +197,7 @@
         if (box && box.classList.contains('is-invalid')) { applyCustomRules(); showFieldState(e.target); }
     });
 
-    // Usuario en minúsculas sin espacios
+    // Usuario sin espacios
     $('#usuario').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\s/g, ''); });
 
     /* ======================================================================
@@ -265,10 +278,185 @@
     qrRemove.addEventListener('click', () => { qrInput.value = ''; resetQr(); qrInput.focus(); });
 
     /* ======================================================================
-       5. MÓDULOS DE PRÁCTICA
+       4B. FACTURACIÓN (paso 5, opcional)
+       ====================================================================== */
+    const chkFactura  = $('#requiereFactura');
+    const cajaFactura = $('#facturaCampos');
+    const camposFact  = $$('[data-billing]', cajaFactura);
+    const rfcFactura  = $('#rfcFactura');
+
+    // La casilla muestra/oculta los campos y los habilita o deshabilita.
+    // Un campo deshabilitado se ignora en showFieldState(), así que no bloquea el envío.
+    function syncFactura() {
+        const on = chkFactura.checked;
+        cajaFactura.hidden = !on;
+        camposFact.forEach((c) => {
+            c.disabled = !on;
+            c.required = on && c.hasAttribute('data-billing-required');
+            if (!on) {
+                c.setCustomValidity('');
+                const box = c.closest('[data-field]');
+                box.classList.remove('is-invalid');
+                $('.error', box).textContent = '';
+            }
+        });
+    }
+    chkFactura.addEventListener('change', syncFactura);
+
+    rfcFactura.addEventListener('input', () => {
+        rfcFactura.value = rfcFactura.value.toUpperCase().replace(/\s/g, '');
+    });
+    $('#regimenFiscal').addEventListener('change', () => {
+        applyCustomRules();
+        if (rfcFactura.value) showFieldState(rfcFactura);
+    });
+    $('#constanciaFiscal').addEventListener('change', (e) => {
+        const f = e.target.files[0];
+        e.target.setCustomValidity(
+            !f ? '' :
+            f.type !== 'application/pdf' ? 'El archivo debe ser un PDF.' :
+            f.size > 3 * 1024 * 1024 ? 'El PDF supera el máximo de 3 MB.' : ''
+        );
+        showFieldState(e.target);
+    });
+    syncFactura();
+
+    /* ======================================================================
+       5. SOLICITAR CITA (sección 02)
+       ====================================================================== */
+    const citaForm  = $('#citaForm');
+    const cAlert    = $('#citaAlert');
+    const cFecha    = $('#fechaCita');
+    const cSucursal = $('#sucursal');
+    const cAnio     = $('#anioVehiculo');
+    const cPlacas   = $('#placas');
+    const cDesc     = $('#descripcionCita');
+    const cContador = $('#descContador');
+    const cTbody    = $('#tablaSolicitudes tbody');
+    const cVacia    = $('#solicitudesVacia');
+    const cConteo   = $('#solicitudesConteo');
+    let cConsecutivo = 0;
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const toInput = (d) =>
+        `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+    const citaControls = () => controlsOf(citaForm);
+
+    function setCitaAlert(text, ok = false) {
+        cAlert.hidden = !text;
+        cAlert.textContent = text || '';
+        cAlert.classList.toggle('form-alert--ok', ok);
+    }
+
+    // Límites dinámicos: la cita debe ser futura y dentro de 90 días
+    const ahora = new Date();
+    cFecha.min = toInput(ahora);
+    const limite = new Date(ahora); limite.setDate(limite.getDate() + 90);
+    cFecha.max = toInput(limite);
+    cAnio.min = 1980;
+    cAnio.max = ahora.getFullYear() + 1;
+
+    // Reglas de negocio (horario de atención y sucursal de la lista)
+    function applyCitaRules() {
+        let m = '';
+        if (cFecha.value) {
+            const d = new Date(cFecha.value);
+            const dia = d.getDay(), hora = d.getHours() + d.getMinutes() / 60;
+            const cierre = dia === 6 ? 14 : 18;
+            if (d < new Date()) m = 'La cita debe ser posterior al momento actual.';
+            else if (dia === 0) m = 'No se atiende los domingos.';
+            else if (hora < 8 || hora >= cierre) m = `Horario de atención: de 08:00 a ${cierre}:00 h.`;
+        }
+        cFecha.setCustomValidity(m);
+
+        const validas = $$('#sucursalesList option').map((o) => o.value);
+        cSucursal.setCustomValidity(cSucursal.value && !validas.includes(cSucursal.value)
+            ? 'Elige una sucursal de la lista.' : '');
+    }
+
+    cPlacas.addEventListener('input', () => { cPlacas.value = cPlacas.value.toUpperCase().replace(/\s/g, ''); });
+    cDesc.addEventListener('input', () => { cContador.textContent = `${cDesc.value.length}/300`; });
+
+    const revalidarCita = (e) => {
+        if (!e.target.matches('input, select, textarea')) return;
+        applyCitaRules();
+        if (e.target.closest('.is-invalid')) showFieldState(e.target);
+    };
+    citaForm.addEventListener('input', revalidarCita);
+    citaForm.addEventListener('change', revalidarCita);
+
+    // Copia los datos capturados en el registro (si existen) al formulario de cita
+    $('#btnUsarRegistro').addEventListener('click', () => {
+        const nombreCompleto = [$('#nombre').value, $('#apPaterno').value, $('#apMaterno').value]
+            .map((s) => s.trim()).filter(Boolean).join(' ');
+        const set = (id, value) => { if (value) $(id).value = value; };
+        set('#nombreCliente', nombreCompleto);
+        set('#telefonoCliente', $('#numeroTelefonico').value.trim());
+        set('#correoCliente', $('#email').value.trim());
+        if (!nombreCompleto && !$('#numeroTelefonico').value && !$('#email').value) {
+            setCitaAlert('Aún no hay datos en el registro. Captura el paso 1 y 2 del registro o escríbelos aquí.');
+        } else {
+            setCitaAlert('');
+        }
+    });
+
+    const celda = (texto) => { const td = document.createElement('td'); td.textContent = texto; return td; };
+
+    function agregarFilaCita(d) {
+        const tr = document.createElement('tr');
+
+        const tdCliente = document.createElement('td');
+        const strong = document.createElement('strong'); strong.textContent = d.cliente;
+        tdCliente.append(strong, document.createElement('br'), d.unidad);
+
+        const tdEstatus = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = 'status status--plan'; badge.textContent = 'Programada';
+        tdEstatus.append(badge);
+
+        tr.append(celda(d.folio), tdCliente, celda(d.servicio), celda(d.sucursal), celda(d.fecha), tdEstatus);
+        cTbody.prepend(tr);
+        cVacia.hidden = true;
+        cConteo.textContent = `${cConsecutivo} ${cConsecutivo === 1 ? 'registro' : 'registros'}`;
+    }
+
+    function limpiarCita() {
+        citaForm.reset();
+        $$('[data-field]', citaForm).forEach((b) => { b.classList.remove('is-invalid'); const o = $('.error', b); if (o) o.textContent = ''; });
+        citaControls().forEach((c) => { c.setCustomValidity(''); c.removeAttribute('aria-invalid'); });
+        cContador.textContent = '0/300';
+    }
+
+    citaForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        applyCitaRules();
+        let bad = null;
+        citaControls().forEach((c) => { if (!showFieldState(c) && !bad) bad = c; });
+        if (bad) { setCitaAlert('Revisa los campos marcados antes de enviar.'); bad.focus(); return; }
+
+        cConsecutivo++;
+        const hoy = new Date();
+        const folio = `CT-${hoy.getFullYear()}${pad(hoy.getMonth() + 1)}${pad(hoy.getDate())}-${String(cConsecutivo).padStart(3, '0')}`;
+        agregarFilaCita({
+            folio,
+            cliente: $('#nombreCliente').value.trim(),
+            unidad: `${$('#marcaVehiculo').value.trim()} ${$('#modeloVehiculo').value.trim()} ${cAnio.value} · ${cPlacas.value}`,
+            servicio: $('#tipoServicio').value,
+            sucursal: cSucursal.value,
+            fecha: new Date(cFecha.value).toLocaleString('es-MX', { dateStyle: 'long', timeStyle: 'short' })
+        });
+        limpiarCita();
+        setCitaAlert(`Solicitud registrada (simulada) con folio ${folio}. Los datos no se almacenan.`, true);
+    });
+
+    $('#btnLimpiarCita').addEventListener('click', () => { limpiarCita(); setCitaAlert(''); });
+
+    /* ======================================================================
+       6. MÓDULOS DE PRÁCTICA
        ====================================================================== */
 
-    /* --- 5.1 Visualización de citas --- */
+    /* --- 6.1 Visualización de citas --- */
     const radiosCitas = $$('input[name="filtroCitas"]');
     const mes = $('#citasMes'), semana = $('#citasSemana');
     const filasCitas = $$('#tablaCitas tbody tr[data-fecha]');
@@ -308,7 +496,7 @@
     $('#verCitas').addEventListener('click', mostrarCitas);
     mostrarCitas();
 
-    /* --- 5.2 Configuración de la interfaz --- */
+    /* --- 6.2 Configuración de la interfaz --- */
     const root = document.documentElement;
     const fontColor = $('#fontColor'), bgColor = $('#backgroundColor');
     fontColor.addEventListener('input', () => root.style.setProperty('--ink', fontColor.value));
@@ -335,7 +523,7 @@
         renderVolume();
     });
 
-    /* --- 5.3 Foto de perfil (vista previa local) --- */
+    /* --- 6.3 Foto de perfil (vista previa local) --- */
     const photo = $('#userPhoto'), photoImg = $('#userPhotoImg');
     const photoDefault = photoImg.src;
     let photoUrl = null;
@@ -352,7 +540,7 @@
         photoImg.src = photoUrl;
     });
 
-    /* --- 5.4 Datos fiscales --- */
+    /* --- 6.4 Datos fiscales (módulo de práctica) --- */
     const rfc = $('#rfc');
     rfc.addEventListener('input', () => { rfc.value = rfc.value.toUpperCase(); if (rfc.closest('.is-invalid')) showFieldState(rfc); });
     rfc.addEventListener('blur', () => rfc.value && showFieldState(rfc));
@@ -362,30 +550,7 @@
         showFieldState(e.target);
     });
 
-    /* --- 5.5 Solicitud de cita --- */
-    const citaForm = $('#citaForm'), fechaCita = $('#dateAppointment'), sucursal = $('#locations');
-    const pad = (n) => String(n).padStart(2, '0');
-    const ahora = new Date();
-    fechaCita.min = `${ahora.getFullYear()}-${pad(ahora.getMonth() + 1)}-${pad(ahora.getDate())}T${pad(ahora.getHours())}:${pad(ahora.getMinutes())}`;
-
-    citaForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const validas = $$('#locationsList option').map((o) => o.value);
-        sucursal.setCustomValidity(sucursal.value && !validas.includes(sucursal.value) ? 'Elige una sucursal de la lista.' : '');
-        fechaCita.setCustomValidity(fechaCita.value && fechaCita.value < fechaCita.min ? 'La cita debe ser posterior al momento actual.' : '');
-        let bad = null;
-        controlsOf(citaForm).forEach((c) => { if (!showFieldState(c) && !bad) bad = c; });
-        const status = $('#citaStatus');
-        if (bad) { status.hidden = true; bad.focus(); return; }
-        status.hidden = false;
-        status.textContent = 'Solicitud de cita registrada (simulada); no se almacena.';
-    });
-    citaForm.addEventListener('input', (e) => {
-        e.target.setCustomValidity && e.target.setCustomValidity('');
-        if (e.target.closest('.is-invalid')) showFieldState(e.target);
-    });
-
-    /* --- 5.6 Solicitud de herramientas --- */
+    /* --- 6.5 Solicitud de herramientas --- */
     const tbody = $('#tablaTools tbody');
     const toolSel = $('#toolName'), toolQty = $('#toolQuantity');
 

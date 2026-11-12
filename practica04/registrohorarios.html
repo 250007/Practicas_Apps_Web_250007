@@ -28,18 +28,13 @@
         <p class="site-header__lead">
             Explora los controles de formulario de HTML5 en nuestro laboratorio de demostración.
         </p>
-        <ul class="chips" aria-label="Tecnologías de la práctica">
-            <li>HTML5 semántico</li>
-            <li>CSS puro</li>
-            <li>JavaScript · Práctica 04</li>
-        </ul>
     </div>
 </header>
 
 <main class="wrap">
 
     <!-- ============================================================
-         SECCIÓN 01 · REGISTRO (asistente de 4 pasos)
+         SECCIÓN 01 · REGISTRO (asistente de 5 pasos)
          ============================================================ -->
     <section class="section" aria-labelledby="tituloRegistro">
         <div class="section__head">
@@ -48,11 +43,11 @@
                 <p class="eyebrow">Módulo principal</p>
                 <h2 id="tituloRegistro">Solicitud de registro</h2>
                 <p class="section__desc">
-                    Completa las cuatro etapas del registro. Los campos obligatorios se validan al avanzar
+                    Completa las cinco etapas del registro. Los campos obligatorios se validan al avanzar
                     y los datos aún no se envían a ningún servidor.
                 </p>
             </div>
-            <p class="section__aside">01 — 04 secciones</p>
+            <p class="section__aside">01 — 05 secciones</p>
         </div>
 
         <form id="registroForm" class="wizard" action="#" method="post" novalidate>
@@ -84,6 +79,12 @@
                             <span class="stepper__label">Datos de ubicación</span>
                         </button>
                     </li>
+                    <li class="stepper__item">
+                        <button type="button" class="stepper__btn" data-step="4">
+                            <span class="stepper__circle"><i class="ri-file-list-3-line" aria-hidden="true"></i><b>05</b></span>
+                            <span class="stepper__label">Facturación <small class="stepper__opt">Opcional</small></span>
+                        </button>
+                    </li>
                 </ol>
             </nav>
 
@@ -93,7 +94,7 @@
             <!-- ───────── PASO 1 · Datos personales ───────── -->
             <fieldset class="wizard-panel" id="paso1">
                 <legend class="panel-head">
-                    <span class="eyebrow">Paso 01 de 04</span>
+                    <span class="eyebrow">Paso 01 de 05</span>
                     <span class="panel-title">Datos personales</span>
                     <span class="panel-sub">Comencemos con la información básica de tu perfil.</span>
                     <i class="ri-user-line panel-head__icon" aria-hidden="true"></i>
@@ -160,7 +161,7 @@
             <!-- ───────── PASO 2 · Datos de contacto ───────── -->
             <fieldset class="wizard-panel" id="paso2" hidden>
                 <legend class="panel-head">
-                    <span class="eyebrow">Paso 02 de 04</span>
+                    <span class="eyebrow">Paso 02 de 05</span>
                     <span class="panel-title">Datos de contacto</span>
                     <span class="panel-sub">Cuéntanos cómo podemos comunicarnos contigo.</span>
                     <i class="ri-contacts-book-line panel-head__icon" aria-hidden="true"></i>
@@ -281,7 +282,7 @@
             <!-- ───────── PASO 3 · Datos de acceso ───────── -->
             <fieldset class="wizard-panel" id="paso3" hidden>
                 <legend class="panel-head">
-                    <span class="eyebrow">Paso 03 de 04</span>
+                    <span class="eyebrow">Paso 03 de 05</span>
                     <span class="panel-title">Datos de acceso</span>
                     <span class="panel-sub">Crea tus credenciales para acceder a MecaGest.</span>
                     <i class="ri-lock-line panel-head__icon" aria-hidden="true"></i>
@@ -330,7 +331,7 @@
             <!-- ───────── PASO 4 · Datos de ubicación ───────── -->
             <fieldset class="wizard-panel" id="paso4" hidden>
                 <legend class="panel-head">
-                    <span class="eyebrow">Paso 04 de 04</span>
+                    <span class="eyebrow">Paso 04 de 05</span>
                     <span class="panel-title">Datos de ubicación</span>
                     <span class="panel-sub">Indica dónde podemos localizarte.</span>
                     <i class="ri-map-pin-line panel-head__icon" aria-hidden="true"></i>
@@ -385,7 +386,104 @@
                         <p class="error" aria-live="polite"></p>
                     </div>
                 </div>
+            </fieldset>
 
+            <!-- ───────── PASO 5 · Facturación (opcional) ───────── -->
+            <fieldset class="wizard-panel" id="paso5" hidden>
+                <legend class="panel-head">
+                    <span class="eyebrow">Paso 05 de 05</span>
+                    <span class="panel-title">Facturación (opcional)</span>
+                    <span class="panel-sub">Si necesitas facturación, activa la casilla y completa los datos; de lo contrario, omite este paso.</span>
+                    <i class="ri-file-list-3-line panel-head__icon" aria-hidden="true"></i>
+                </legend>
+
+                <label class="check check--lead" for="requiereFactura">
+                    <input type="checkbox" id="requiereFactura" name="requiereFactura">
+                    <span>Deseo proporcionar datos de facturación</span>
+                </label>
+                <p class="hint">Esta etapa es opcional. Si no necesitas facturación, puedes finalizar sin llenar estos campos.</p>
+
+                <div class="billing-box" id="facturaCampos" hidden>
+                    <div class="grid-2">
+                        <div class="field" data-field>
+                            <label for="rfcFactura">RFC <abbr title="Obligatorio">*</abbr></label>
+                            <div class="control">
+                                <i class="ri-bank-card-line" aria-hidden="true"></i>
+                                <input type="text" id="rfcFactura" name="rfcFactura" maxlength="13" placeholder="Ej. ABCD010203XYZ"
+                                       autocomplete="off" pattern="[A-ZÑ&amp;]{3,4}[0-9]{6}[A-Z0-9]{3}"
+                                       data-billing data-billing-required
+                                       data-msg="RFC no válido: 3-4 letras, 6 dígitos de fecha y 3 caracteres de homoclave.">
+                            </div>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field" data-field>
+                            <label for="razonSocial">Nombre o razón social</label>
+                            <div class="control">
+                                <i class="ri-building-2-line" aria-hidden="true"></i>
+                                <input type="text" id="razonSocial" name="razonSocial" maxlength="150"
+                                       placeholder="Nombre para facturación" data-billing>
+                            </div>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field" data-field>
+                            <label for="regimenFiscal">Régimen fiscal</label>
+                            <div class="control">
+                                <i class="ri-article-line" aria-hidden="true"></i>
+                                <select id="regimenFiscal" name="regimenFiscal" data-billing>
+                                    <option value="" selected>Seleccionar régimen</option>
+                                    <option value="601">601 · General de Ley Personas Morales</option>
+                                    <option value="605">605 · Sueldos y Salarios</option>
+                                    <option value="612">612 · Actividades Empresariales y Profesionales</option>
+                                    <option value="626">626 · Régimen Simplificado de Confianza</option>
+                                    <option value="OTRO">Otro (por definir)</option>
+                                </select>
+                            </div>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field" data-field>
+                            <label for="usoCfdi">Uso del CFDI</label>
+                            <div class="control">
+                                <i class="ri-computer-line" aria-hidden="true"></i>
+                                <select id="usoCfdi" name="usoCfdi" data-billing>
+                                    <option value="" selected>Seleccionar uso</option>
+                                    <option value="G03">G03 · Gastos en general</option>
+                                    <option value="S01">S01 · Sin efectos fiscales</option>
+                                    <option value="OTRO">Otro (por definir)</option>
+                                </select>
+                            </div>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field" data-field>
+                            <label for="cpFiscal">Código postal fiscal</label>
+                            <div class="control">
+                                <i class="ri-map-pin-line" aria-hidden="true"></i>
+                                <input type="text" id="cpFiscal" name="cpFiscal" placeholder="5 dígitos" inputmode="numeric"
+                                       pattern="[0-9]{5}" maxlength="5" data-billing
+                                       data-msg="El código postal debe tener 5 dígitos.">
+                            </div>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field" data-field>
+                            <label for="constanciaFiscal" class="label--sub">Constancia de situación fiscal (PDF)</label>
+                            <input type="file" id="constanciaFiscal" name="constanciaFiscal"
+                                   accept=".pdf,application/pdf" data-billing>
+                            <p class="hint">Archivo opcional (máx. 3 MB). La carga real y su revisión se implementarán en PHP.</p>
+                            <p class="error" aria-live="polite"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="hint hint--block">
+                    Datos de ejemplo para fines académicos. Antes de una facturación real, deben comprobarse los catálogos
+                    del SAT, el régimen y los requisitos de CFDI vigentes.
+                </p>
+
+                <!-- Términos y condiciones (movidos del paso 4 al paso final) -->
                 <div class="terms" data-field>
                     <label class="check" for="terms">
                         <input type="checkbox" id="terms" name="terms" value="validado" required>
@@ -569,7 +667,7 @@
             </div>
         </article>
 
-        <!-- 2.4 Datos fiscales -->
+        <!-- 2.4 Datos fiscales (módulo de práctica; app.js lo usa, no lo borres sin quitar su bloque JS) -->
         <article class="module" aria-labelledby="modFiscal">
             <h3 class="module__title" id="modFiscal"><span class="module__num">04</span> Datos fiscales</h3>
             <div class="module__body grid-2">
